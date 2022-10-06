@@ -1,0 +1,52 @@
+name: Docker Hub Tag Deletion
+author: Josh Beard
+description: Deletes specified images from a Docker Hub image after a specified date.
+inputs:
+  dockerhub_username:
+    description: Docker Hub username
+    required: true
+  dockerhub_password:
+    description: Docker Hub password or Personal Access Token with read/write/delete scope
+    required: true
+  dockerhub_repository:
+    description: Docker Hub repository in the format `<namespace>/<name>`
+    required: true
+  dockerhub_api_host:
+    description: The hostname of the Docker Hub API. Connects over HTTPS.
+    default: hub.docker.com
+  date_format:
+    description: >
+      Format the source date is in using standard the C standard.
+      See https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+      for more information.
+    default: '%B %d, %Y'
+  json_file:
+    description: A relative path to a JSON file to parse.
+  markdown_file:
+    description: The relative path to the Markdown file containing a table with tags and dates.
+    default: README.md
+  markdown_begin_string:
+    description: A string that begins the Markdown table block with tags to parse.
+    default: '<!-- BEGIN deletion_table -->'
+  markdown_end_string:
+    description: A string that ends the Markdown table block with tags.
+    default: '<!-- END deletion_table -->'
+
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    DOCKERHUB_USERNAME: ${{ inputs.dockerhub_username }}
+    DOCKERHUB_PASSWORD: ${{ inputs.dockerhub_password }}
+    DOCKERHUB_REPOSITORY: ${{ inputs.dockerhub_repository }}
+    DOCKERHUB_API_HOST: ${{ inputs.dockerhub_api_host }}
+    MARKDOWN_FILE: ${{ inputs.markdown_file }}
+    MARKDOWN_BEGIN_STRING: ${{ inputs.markdown_begin_string }}
+    MARKDOWN_END_STRING: ${{ inputs.markdown_end_string }}
+    JSON_FILE: ${{ inputs.json_file }}
+    DATE_FORMAT: ${{ inputs.date_format }}
+
+branding:
+  icon: trash-2
+  color: blue
+
