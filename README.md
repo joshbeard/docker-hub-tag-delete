@@ -148,6 +148,10 @@ Setting custom configuration, showing all action inputs:
 Refer to the `inputs` section of the [`action.yml`](action.yml) file for
 more information.
 
+See an example of using this in the
+[joshbeard/docker-ansible](https://github.com/joshbeard/docker-ansible/)
+repository.
+
 ## Authors
 
 * Josh Beard, [joshbeard.me](https://joshbeard.me)
