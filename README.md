@@ -6,7 +6,9 @@ A GitHub action is also included.
 
 ## Getting Started
 
-1. Provide a list of tags in a JSON and/or Markdown file with a deletion date. See [Tag List](#tag-list) below.
+1. Provide a list of tags in a JSON and/or Markdown file with a deletion date.
+   See [Tag List](#tag-list) below.
+
 2. Run via [cli](#running) or [GitHub Action](#github-action).
 
 ## Configuration
