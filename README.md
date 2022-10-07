@@ -247,3 +247,10 @@ To activate the Python virtual environment in the container:
 
 [BSD Zero Clause License (0BSD)](LICENSE)
 
+## Repository Integrations
+
+* [Codacy](https://app.codacy.com/gh/joshbeard/docker-hub-tag-delete/)
+* [CodeFactor](https://www.codefactor.io/repository/github/joshbeard/docker-hub-tag-delete)
+* [Deepsource](https://deepsource.io/gh/joshbeard/docker-hub-tag-delete/)
+* [Renovate](https://www.mend.io/free-developer-tools/renovate/)
+
