@@ -31,6 +31,12 @@ inputs:
   markdown_end_string:
     description: A string that ends the Markdown table block with tags.
     default: '<!-- END deletion_table -->'
+  markdown_tag_column:
+    description: The column number that the tags are listed in.
+    default: 1
+  markdown_date_column:
+    description: The table column number that the date is in.
+    default: 2
 
 runs:
   using: docker
@@ -43,6 +49,8 @@ runs:
     MARKDOWN_FILE: ${{ inputs.markdown_file }}
     MARKDOWN_BEGIN_STRING: ${{ inputs.markdown_begin_string }}
     MARKDOWN_END_STRING: ${{ inputs.markdown_end_string }}
+    MARKDOWN_TAG_COLUMN: ${{ inputs.markdown_tag_column }}
+    MARKDOWN_DATE_COLUMN: ${{ inputs.markdown_date_column }}
     JSON_FILE: ${{ inputs.json_file }}
     DATE_FORMAT: ${{ inputs.date_format }}
 

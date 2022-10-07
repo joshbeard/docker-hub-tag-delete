@@ -52,7 +52,9 @@ config = {
         'begin_string': os.environ.get('MARKDOWN_BEGIN_STRING',
                                        '<!-- BEGIN deletion_table -->'),
         'end_string': os.environ.get('MARKDOWN_END_STRING',
-                                     '<!-- END deletion_table -->')
+                                     '<!-- END deletion_table -->'),
+        'tag_column': os.environ.get('MARKDOWN_TAG_COLUMN', 1),
+        'date_column': os.environ.get('MARKDOWN_DATE_COLUMN', 2)
     }
 }
 
@@ -68,9 +70,7 @@ def line_is_ignored(line):
     """Check if a line from Markdown should be ignored"""
     ignore_lines = [
         config['markdown']['begin_string'],
-        config['markdown']['end_string'],
-        '| Tag',
-        '| ---',
+        config['markdown']['end_string']
     ]
     for ignore in ignore_lines:
         if line.startswith(ignore):
@@ -85,11 +85,17 @@ def get_readme_table():
     md_file = open(config['markdown']['file'], 'r').readlines()
     parsing = False
     items = []
+    linenum = 0
     for line in md_file:
         if line.startswith(config['markdown']['begin_string']):
             parsing = True
         if parsing and not line_is_ignored(line):
-            items.append(parse_md_line(line))
+            # ignore empty lines
+            if line.strip():
+                linenum += 1
+                # Skip the header and separator (first two lines)
+                if linenum > 2:
+                    items.append(parse_md_line(line))
         if line.startswith(config['markdown']['end_string']):
             parsing = False
 
@@ -103,7 +109,17 @@ def parse_date(date):
 
 def parse_md_line(md_line):
     """Extract tag patterns and expiration dates from a Markdown table row"""
-    _, tags, date = md_line.strip().split('|')
+    md = md_line.strip().split('|')
+
+    if int(config['markdown']['tag_column']) > (len(md) - 1):
+        raise IndexError('tag column is out of range.')
+    if int(config['markdown']['date_column']) > (len(md) - 1):
+        raise IndexError('date column is out of range.')
+
+    # Determine which table column the tags and date are in
+    tags = md[int(config['markdown']['tag_column'])]
+    date = md[int(config['markdown']['date_column'])]
+
     tags = tags.strip().replace('`', '')
     date = date.strip()
     tags = tags.split(',')

@@ -78,6 +78,18 @@ A string that begins the Markdown table block with tags to parse.
 
 A string that ends the Markdown table block with tags.
 
+#### `MARKDOWN_TAG_COLUMN`
+
+The column number that the tags are listed in.
+
+Default: `1`
+
+#### `MARKDOWN_DATE_COLUMN`
+
+The table column number that the date is in.
+
+Default: `2`
+
 ### Tag List
 
 A source for tags and their deletion dates must be provided. This may be
@@ -91,6 +103,13 @@ provided in a coupld of ways - a JSON file and/or a Markdown table.
   { "tags": ["2", "2.*"], "date": "November 13, 2023" }
 ]
 ```
+
+* The JSON file should be a _list_ of _dictionaries_ with a `tag` and `date`
+  key in each one.
+
+* The value of `tags` should be a list of tag
+  [patterns](https://docs.python.org/3/library/fnmatch.html) to match.
+  The value of `date` should be a date in the [DATE_FORMAT](#date-format).
 
 #### Tag List: Markdown Table
 
@@ -110,6 +129,15 @@ following format:
 * Use a BEGIN and END comment tag surrounding the table block in a Markdown
   document. These begin/end comment strings are configurable.
 
+* Ensure each row of the table begins with a pipe (`|`). It doesn't have to
+  have one at the end.
+
+* The header names are irrelevant.
+
+* The number of columns is irrelevant. (set the [tag](#markdown-tag-column)
+  and [date](#markdown-date-column) column values if the tag/date aren't in the
+  first two columns of the table.
+
 * Two-column table with a list of grouped tags in the first column and the
   deletion date in the second column.
 
@@ -118,7 +146,7 @@ following format:
 * The list of tags may optionally be formatted (e.g. with single backticks,
   italics, bold) and can be a comma-separated list of tags with wildcards.
 
-* The deletion date format is customizable.
+* The deletion date format is customizable. Set the [date format](#date-format).
 
 ## Running
 
@@ -166,6 +194,8 @@ Setting custom configuration, showing all action inputs:
         markdown_file: README.md
         markdown_begin_string: '<!-- BEGIN deletion_table -->'
         markdown_end_string: '<!-- END deletion_table -->'
+        markdown_tag_column: 1
+        markdown_date_column: 2
 ```
 
 Refer to the `inputs` section of the [`action.yml`](action.yml) file for
@@ -238,7 +268,6 @@ To activate the Python virtual environment in the container:
 ## TODO
 
 * Improve error handling (v1)
-* Improve Markdown parsing and customization (v1)
 * Improve output (v1)
 * List on Marketplace once (v1) items are completed
 * Improve [tests](tests/)
