@@ -48,7 +48,7 @@ config = {
     },
     'markdown': {
         'file': os.environ.get('MARKDOWN_FILE'),
-        'format': 'table', # only 'table' is available currently.
+        'format': 'table',  # only 'table' is available currently.
         'begin_string': os.environ.get('MARKDOWN_BEGIN_STRING',
                                        '<!-- BEGIN deletion_table -->'),
         'end_string': os.environ.get('MARKDOWN_END_STRING',
