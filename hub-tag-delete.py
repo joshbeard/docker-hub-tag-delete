@@ -212,12 +212,11 @@ def tags_matching_pattern(pattern):
 
 
 if __name__ == "__main__":
-    tags = tags_to_delete()
-    if len(tags) > 0:
-        print(f"Tags to delete: {tags}")
+    _tags = tags_to_delete()
+    if len(_tags) > 0:
         deleted = delete_expired_tags()
-        for tag in tags:
-            print(f"> Deleted {config['docker_hub']['organization']}/{config['docker_hub']['repository']}:{tag}")
+        for _tag in _tags:
+            print(f"> Deleted {config['docker_hub']['organization']}/{config['docker_hub']['repository']}:{_tag}")
     else:
         print("There are no tags to delete.")
 
