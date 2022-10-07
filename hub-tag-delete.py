@@ -44,10 +44,10 @@ config = {
         'password': os.environ.get('DOCKERHUB_PASSWORD')
     },
     'json': {
-        'file': os.environ.get('JSON_FILE', None)
+        'file': os.environ.get('JSON_FILE')
     },
     'markdown': {
-        'file': os.environ.get('MARKDOWN_FILE', None),
+        'file': os.environ.get('MARKDOWN_FILE'),
         'format': 'table', # only 'table' is available currently.
         'begin_string': os.environ.get('MARKDOWN_BEGIN_STRING',
                                        '<!-- BEGIN deletion_table -->'),
