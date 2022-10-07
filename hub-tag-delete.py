@@ -162,7 +162,6 @@ def delete_expired_tags():
 
 def docker_hub_token():
     """Return an auth token for the Docker Hub API"""
-
     headers = {"Content-type": "application/json"}
     body = json.dumps({
         'username': config['docker_hub']['username'],
@@ -179,7 +178,6 @@ def tags_matching_pattern(pattern):
     """Compares tags on Docker Hub to our tag patterns and returns a list of
        matching tags that are on Docker Hub
     """
-
     url = '/namespaces/' \
             + config['docker_hub']['organization'] \
             + '/repositories/' \
