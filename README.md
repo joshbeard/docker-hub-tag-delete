@@ -1,6 +1,7 @@
 # Docker Hub Image Tag Deleter
 
-Schedule and handle the deletion of image tags on the [Docker Hub](https://hub.docker.com).
+Schedule and handle the deletion of image tags on the [Docker
+Hub](https://hub.docker.com).
 
 A GitHub action is also included.
 
@@ -31,7 +32,8 @@ The password or access token for authenticating with Docker Hub.
 
 __Required__
 
-The name of the repository (image) on Docker Hub in the format of `<namespace>/<name>`
+The name of the repository (image) on Docker Hub in the format of
+`<namespace>/<name>`
 
 #### `DATE_FORMAT`
 
@@ -80,7 +82,8 @@ provided in a coupld of ways ways - a JSON file and/or a Markdown table.
 
 #### Tag List: Markdown Table
 
-The tag list and deletion dates can be set in a Markdown table using the following format:
+The tag list and deletion dates can be set in a Markdown table using the
+following format:
 
 ```plain
 <!-- BEGIN deletion_table -->
@@ -92,11 +95,17 @@ The tag list and deletion dates can be set in a Markdown table using the followi
 <!-- END deletion_table -->
 ```
 
-* Use a BEGIN and END comment tag surrounding the table block in a Markdown document. These begin/end comment strings are configurable.
-* Two-column table with a list of grouped tags in the first column and the deletion date in the second column.
+* Use a BEGIN and END comment tag surrounding the table block in a Markdown
+  document. These begin/end comment strings are configurable.
+
+* Two-column table with a list of grouped tags in the first column and the
+  deletion date in the second column.
+
 * The table column headers are customizable.
-* The list of tags may optionally be formatted (e.g. with single backticks, italics, bold) and can be a comma-separated list of tags with
-  wildcards.
+
+* The list of tags may optionally be formatted (e.g. with single backticks,
+  italics, bold) and can be a comma-separated list of tags with wildcards.
+
 * The deletion date format is customizable.
 
 ## Running
@@ -127,8 +136,8 @@ Basic usage:
         markdown_file: README.md
 ```
 
-__NOTE:__ You __must__ explicitly set one or both of `json_file` and `markdown_file` for
-anything to happen.
+__NOTE:__ You __must__ explicitly set one or both of `json_file` and
+`markdown_file` for anything to happen.
 
 Setting custom configuration, showing all action inputs:
 
@@ -162,7 +171,6 @@ Create a virtual environment and activate it:
 
 ```shell
 python -m venv env
-
 . env/bin/activate
 ```
 
@@ -197,8 +205,11 @@ To launch an interactive shell in the Docker container:
 
 ```shell
 docker run --rm -v ${PWD}:/src -w /src --env-file env.local -it hubclean:local sh
+```
 
-# Activate the Python virtual environment
+To activate the Python virtual environment in the container:
+
+```shell
 . /var/hub-tag-delete-venv/bin/activate
 ```
 
