@@ -12,8 +12,6 @@ os.environ['DOCKERHUB_REPOSITORY'] = "foo/bar"
 target = __import__("hub-tag-delete")
 
 def test_line_is_ignored():
-    assert target.line_is_ignored('| Tag') is True
-    assert target.line_is_ignored('| xTag') is False
     assert target.line_is_ignored('| 1.0') is False
     assert target.line_is_ignored('| `1.0`') is False
 
