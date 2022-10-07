@@ -130,16 +130,16 @@ def get_tag_list():
 
 def tags_to_delete():
     """Return a list of tags to delete based on the deletion date"""
-    tags_to_delete = []
+    tags_list = []
     for item in get_tag_list():
         if now >= parse_date(item['date']):
             for pattern in item['tags']:
                 pattern = pattern.strip()
                 t = tags_matching_pattern(pattern)
-                tags_to_delete.append(t)
+                tags_list.append(t)
     # Flatten list
-    tags_to_delete = [i for row in tags_to_delete for i in row]
-    return tags_to_delete
+    tags_list = [i for row in tags_list for i in row]
+    return tags_list
 
 
 def delete_expired_tags():
@@ -213,7 +213,7 @@ def tags_matching_pattern(pattern):
 if __name__ == "__main__":
     _tags = tags_to_delete()
     if len(_tags) > 0:
-        deleted = delete_expired_tags()
+        delete_expired_tags()
         for _tag in _tags:
             img_tag = config['docker_hub']['organization'] + '/' \
                     + config['docker_hub']['repository'] + ':' + _tag
