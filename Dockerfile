@@ -12,7 +12,7 @@ WORKDIR /var/hub-tag-delete-venv
 COPY requirements.txt .
 
 ARG pip_install_args
-RUN . bin/activate && pip install -r requirements.txt
+RUN . bin/activate && pip install --no-cache-dir -r requirements.txt
 
 ###########
 # Runtime #
