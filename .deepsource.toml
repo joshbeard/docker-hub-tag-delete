@@ -1,4 +1,5 @@
 version = 1
+# Ignoring Docstring is over-indented (FLK-D208)
 
 [[analyzers]]
 name = "shell"
