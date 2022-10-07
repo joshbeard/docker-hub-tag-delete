@@ -213,7 +213,9 @@ if __name__ == "__main__":
     if len(_tags) > 0:
         deleted = delete_expired_tags()
         for _tag in _tags:
-            print(f"> Deleted {config['docker_hub']['organization']}/{config['docker_hub']['repository']}:{_tag}")
+            img_tag = config['docker_hub']['organization'] + '/' \
+                    + config['docker_hub']['repository'] + ':' + _tag
+            print(f"> Deleted {img_tag}")
     else:
         print("There are no tags to delete.")
 
