@@ -77,7 +77,7 @@ A string that ends the Markdown table block with tags.
 ### Tag List
 
 A source for tags and their deletion dates must be provided. This may be
-provided in a coupld of ways ways - a JSON file and/or a Markdown table.
+provided in a coupld of ways - a JSON file and/or a Markdown table.
 
 #### Tag List: JSON File
 
