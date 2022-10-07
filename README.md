@@ -129,8 +129,7 @@ following format:
 * Use a BEGIN and END comment tag surrounding the table block in a Markdown
   document. These begin/end comment strings are configurable.
 
-* Ensure each row of the table begins with a pipe (`|`). It doesn't have to
-  have one at the end.
+* Only lines that begin with a pipe (`|`) are parsed.
 
 * The header names are irrelevant.
 
@@ -143,10 +142,11 @@ following format:
 
 * The table column headers are customizable.
 
-* The list of tags may optionally be formatted (e.g. with single backticks,
-  italics, bold) and can be a comma-separated list of tags with wildcards.
+* The tag column may be a single tag or a list of comma-separated tags. The
+  values can optionally be surrounded in backticks and can use wildcards.
 
-* The deletion date format is customizable. Set the [date format](#date-format).
+* The date column should be a single date value in the configured
+  [date format](#date-format).
 
 ## Running
 
@@ -176,10 +176,14 @@ Basic usage:
         markdown_file: README.md
 ```
 
-__NOTE:__ You __must__ explicitly set one or both of `json_file` and
-`markdown_file` for anything to happen.
+* The GitHub Action exposes all of the [environment
+  variables](#environment-variables) as action inputs. At a minimum, the
+  `dockerhub_username`, `dockerhub_password`, and `dockerhub_repository` must
+  be set in addition to `markdown_file` and/or `json_file`.
 
-Setting custom configuration, showing all action inputs:
+* Use `v1` for the action version for now.
+
+An example showing all inputs:
 
 ```yaml
     - name: Docker Hub Tag Deleter

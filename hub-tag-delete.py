@@ -89,13 +89,14 @@ def get_readme_table():
     for line in md_file:
         if line.startswith(config['markdown']['begin_string']):
             parsing = True
-        if parsing and not line_is_ignored(line):
-            # ignore empty lines
-            if line.strip():
-                linenum += 1
-                # Skip the header and separator (first two lines)
-                if linenum > 2:
-                    items.append(parse_md_line(line))
+        if parsing:
+            if line.startswith('|') and not line_is_ignored(line):
+                # ignore empty lines
+                if line.strip():
+                    linenum += 1
+                    # Skip the header and separator (first two lines)
+                    if linenum > 2:
+                        items.append(parse_md_line(line))
         if line.startswith(config['markdown']['end_string']):
             parsing = False
 
