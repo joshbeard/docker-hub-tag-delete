@@ -105,7 +105,7 @@ def parse_md_line(md_line):
     tags = tags.strip().replace('`', '')
     date = date.strip()
     tags = tags.split(',')
-    return { 'tags': tags, 'date': date }
+    return {'tags': tags, 'date': date}
 
 def json_tags():
     """Load a JSON file with tag deletions specified."""
