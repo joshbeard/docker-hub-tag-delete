@@ -133,7 +133,6 @@ def tags_to_delete():
         if now >= parse_date(item['date']):
             for pattern in item['tags']:
                 pattern = pattern.strip()
-                #tags_to_delete.append(tags_matching_pattern(pattern))
                 t = tags_matching_pattern(pattern)
                 tags_to_delete.append(t)
     # Flatten list
