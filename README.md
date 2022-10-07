@@ -40,11 +40,11 @@ for more information.
 
 Default: `%B %d, %Y` (October 6, 2022)
 
-#### `DOCKERHUB_API_HOST`
+#### `DOCKERHUB_API_BASE_URL`
 
-The hostname of the Docker Hub API. Connects over HTTPS.
+The base URL of the Docker Hub API.
 
-Default: _hub.docker.com_
+Default: _https://hub.docker.com/v2_
 
 #### `JSON_FILE`
 
@@ -137,7 +137,7 @@ Setting custom configuration, showing all action inputs:
         dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
         dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
         dockerhub_repository: foo/bar
-        dockerhub_api_host: hub.docker.com
+        dockerhub_api_base_url: https://hub.docker.com/v2
         date_format: '%B %d, %Y'
         json_file: images.json
         markdown_file: README.md
@@ -151,6 +151,76 @@ more information.
 See an example of using this in the
 [joshbeard/docker-ansible](https://github.com/joshbeard/docker-ansible/)
 repository.
+
+## Developer Notes
+
+### Local Python Environment
+
+Create a virtual environment and activate it:
+
+```shell
+python -m venv env
+
+. env/bin/activate
+```
+
+Install dependencies:
+
+```shell
+pip install -r requirements.txt
+```
+
+Set the [required environment variables](#environment-variables). See the
+[Running](#running) section.
+
+### Using Docker
+
+To build a local image from the repository:
+
+```shell
+docker build -t hubclean:local .
+```
+
+To run the local image, pass along the required environment variables. For
+example, using the `--env-file` option with the `docker run` command:
+
+```shell
+docker run --rm -v ${PWD}:/src -w /src --env-file env.local -it hubclean:local
+```
+
+Refer to the [Running](#running) section for an example of these required
+[environment variables](#environment-variables).
+
+To launch an interactive shell in the Docker container:
+
+```shell
+docker run --rm -v ${PWD}:/src -w /src --env-file env.local -it hubclean:local sh
+
+# Activate the Python virtual environment
+. /var/hub-tag-delete-venv/bin/activate
+```
+
+* The script is located at `/usr/bin/hub-tag-delete.py`
+* The Python virtual environment is under `/var/hub-tag-delete-venv`
+* The image is based on Alpine Linux (via `python:3.x-alpine`)
+
+## Branching Scheme
+
+* `master` is the default branch that changes should be pulled into.
+* `v1` is a "stable" branch.
+* _tags_ are created by maintainer based on changes.
+
+## TODO
+
+* Improve error handling (v1)
+* Improve Markdown parsing and customization (v1)
+* Improve output (v1)
+* List on Marketplace once (v1) items are completed
+* CLI arguments in addition to existing env vars?
+* GitLab registry support
+* Build and publish image to Docker Hub (of this tool)
+* Provide example GitLab pipeline config (using published image)
+* Ongoing: general improvements
 
 ## Authors
 

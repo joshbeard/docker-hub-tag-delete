@@ -22,7 +22,6 @@ Configuration is set using environment variables.
 * Refer to the LICENSE file in this project's root for license information.
 
 Todo:
-    * Pagination on Docker Hub results
     * Improve output (show scheduled date)
     * Support GitLab registry
     * CLI arguments
@@ -30,15 +29,17 @@ Todo:
 """
 
 import os
-import http.client
 import json
 import fnmatch
 from datetime import datetime
 
+import requests
+
 config = {
     'date_format': os.environ.get('DATE_FORMAT', '%B %d, %Y'),
     'docker_hub': {
-        'api_host': os.environ.get('DOCKERHUB_API_HOST', 'hub.docker.com'),
+        'api_base_url': os.environ.get('DOCKERHUB_API_BASE_URL',
+                                       'https://hub.docker.com/v2'),
         'username': os.environ.get('DOCKERHUB_USERNAME'),
         'password': os.environ.get('DOCKERHUB_PASSWORD')
     },
@@ -60,6 +61,7 @@ config['docker_hub']['organization'] = org
 config['docker_hub']['repository'] = repo
 
 now = datetime.now()
+session = requests.Session()
 
 
 def line_is_ignored(line):
@@ -131,7 +133,9 @@ def tags_to_delete():
         if now >= parse_date(item['date']):
             for pattern in item['tags']:
                 pattern = pattern.strip()
-                tags_to_delete.append(tags_matching_pattern(pattern))
+                #tags_to_delete.append(tags_matching_pattern(pattern))
+                t = tags_matching_pattern(pattern)
+                tags_to_delete.append(t)
     # Flatten list
     tags_to_delete = [i for row in tags_to_delete for i in row]
     return tags_to_delete
@@ -140,7 +144,6 @@ def tags_to_delete():
 def delete_expired_tags():
     """Delete tags from the Docker Hub registry using the API"""
     deleted = []
-    hub = http.client.HTTPSConnection(config['docker_hub']['api_host'])
 
     for tag in tags_to_delete():
         headers = {
@@ -148,13 +151,13 @@ def delete_expired_tags():
             "Authorization": "Bearer %s" % docker_hub_token()
         }
 
-        url = '/v2/namespaces/' + config['docker_hub']['organization'] \
+        url = '/namespaces/' + config['docker_hub']['organization'] \
                 + '/repositories/' + config['docker_hub']['repository'] \
                 + '/tags/' + tag
 
-        hub.request('DELETE', url, headers=headers)
-        resp = hub.getresponse()
-        content = resp.read().decode()
+        resp = session.delete(config['docker_hub']['api_base_url'] + url,
+                        headers=headers)
+        resp.raise_for_status()
         deleted.append(tag)
     return deleted
 
@@ -162,15 +165,15 @@ def delete_expired_tags():
 def docker_hub_token():
     """Return an auth token for the Docker Hub API"""
 
-    auth = http.client.HTTPSConnection(config['docker_hub']['api_host'])
     headers = {"Content-type": "application/json"}
     body = json.dumps({
         'username': config['docker_hub']['username'],
         'password': config['docker_hub']['password']
     })
-    auth.request('POST', '/v2/users/login', body, headers)
-    resp = auth.getresponse()
-    content = json.loads(resp.read().decode())
+    auth = session.post(config['docker_hub']['api_base_url'] + '/users/login',
+                         headers=headers, data=body)
+    auth.raise_for_status()
+    content = auth.json()
     return content['token']
 
 
@@ -179,22 +182,34 @@ def tags_matching_pattern(pattern):
        matching tags that are on Docker Hub
     """
 
-    hub = http.client.HTTPSConnection(config['docker_hub']['api_host'])
-    url = '/v2/namespaces/' \
+    url = '/namespaces/' \
             + config['docker_hub']['organization'] \
             + '/repositories/' \
             + config['docker_hub']['repository'] + '/tags'
-    headers = {"Content-type": "application/json"}
-    hub.request('GET', url, headers=headers)
-    resp = hub.getresponse()
-    hub_tags = json.loads(resp.read().decode())
 
+    headers = {"Content-type": "application/json"}
+
+    resp = session.get(config['docker_hub']['api_base_url'] + url,
+                       headers=headers)
+    _next = None
     matching_tags = []
-    # TODO: pagination
-    for hub_tag in hub_tags['results']:
-        if fnmatch.fnmatch(hub_tag['name'], pattern):
-            matching_tags.append(hub_tag['name'])
-    return matching_tags
+    # Loop through pagination
+    while True:
+        if _next:
+            resp = session.get(_next, headers=headers)
+            resp.raise_for_status()
+
+        resp = resp.json()
+        for i in resp['results']:
+            if fnmatch.fnmatch(i['name'], pattern):
+                matching_tags.append(i['name'])
+            #yield i
+
+        if resp['next']:
+            _next = resp['next']
+            continue
+
+        return matching_tags
 
 
 if __name__ == "__main__":

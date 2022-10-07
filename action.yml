@@ -11,9 +11,9 @@ inputs:
   dockerhub_repository:
     description: Docker Hub repository in the format `<namespace>/<name>`
     required: true
-  dockerhub_api_host:
-    description: The hostname of the Docker Hub API. Connects over HTTPS.
-    default: hub.docker.com
+  dockerhub_api_base_url:
+    description: The base URL of the Docker Hub API.
+    default: https://hub.docker.com/v2
   date_format:
     description: >
       Format the source date is in using standard the C standard.
@@ -39,7 +39,7 @@ runs:
     DOCKERHUB_USERNAME: ${{ inputs.dockerhub_username }}
     DOCKERHUB_PASSWORD: ${{ inputs.dockerhub_password }}
     DOCKERHUB_REPOSITORY: ${{ inputs.dockerhub_repository }}
-    DOCKERHUB_API_HOST: ${{ inputs.dockerhub_api_host }}
+    DOCKERHUB_API_BASE_URL: ${{ inputs.dockerhub_api_base_url }}
     MARKDOWN_FILE: ${{ inputs.markdown_file }}
     MARKDOWN_BEGIN_STRING: ${{ inputs.markdown_begin_string }}
     MARKDOWN_END_STRING: ${{ inputs.markdown_end_string }}
