@@ -199,7 +199,6 @@ def tags_matching_pattern(pattern):
         for i in resp['results']:
             if fnmatch.fnmatch(i['name'], pattern):
                 matching_tags.append(i['name'])
-            #yield i
 
         if resp['next']:
             _next = resp['next']
