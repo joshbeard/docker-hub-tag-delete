@@ -75,6 +75,7 @@ def line_is_ignored(line):
     for ignore in ignore_lines:
         if line.startswith(ignore):
             return True
+    return False
 
 
 def get_readme_table():
