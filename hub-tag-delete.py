@@ -220,4 +220,3 @@ if __name__ == "__main__":
             print(f"> Deleted {img_tag}")
     else:
         print("There are no tags to delete.")
-
