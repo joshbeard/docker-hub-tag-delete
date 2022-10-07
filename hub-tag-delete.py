@@ -95,6 +95,7 @@ def get_readme_table():
 
     return items
 
+
 def parse_date(date):
     """Parse a date string and return a datetime object"""
     return datetime.strptime(date, config['date_format'])
