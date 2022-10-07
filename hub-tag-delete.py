@@ -169,7 +169,7 @@ def docker_hub_token():
         'password': config['docker_hub']['password']
     })
     auth = session.post(config['docker_hub']['api_base_url'] + '/users/login',
-                         headers=headers, data=body)
+            headers=headers, data=body)
     auth.raise_for_status()
     content = auth.json()
     return content['token']
@@ -180,9 +180,9 @@ def tags_matching_pattern(pattern):
        matching tags that are on Docker Hub
     """
     url = '/namespaces/' \
-            + config['docker_hub']['organization'] \
-            + '/repositories/' \
-            + config['docker_hub']['repository'] + '/tags'
+        + config['docker_hub']['organization'] \
+        + '/repositories/' \
+        + config['docker_hub']['repository'] + '/tags'
 
     headers = {"Content-type": "application/json"}
 
