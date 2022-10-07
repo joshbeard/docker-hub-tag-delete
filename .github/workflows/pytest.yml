@@ -1,10 +1,10 @@
-name: Validation
+name: Python Tests
 
 on: [push]
 
 jobs:
   build:
-    name: Python tests
+    name: pytest
     runs-on: ubuntu-latest
     strategy:
       matrix:
