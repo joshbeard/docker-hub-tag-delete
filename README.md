@@ -2,6 +2,7 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/25f78736c6fb48db96bde0f04bda7029)](https://www.codacy.com/gh/joshbeard/docker-hub-tag-delete/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=joshbeard/docker-hub-tag-delete&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/joshbeard/docker-hub-tag-delete/badge)](https://www.codefactor.io/repository/github/joshbeard/docker-hub-tag-delete)
+[![DeepSource](https://deepsource.io/gh/joshbeard/docker-hub-tag-delete.svg/?label=active+issues&show_trend=true&token=JBOrbjcsB0m6ImmQ5Sl2MMve)](https://deepsource.io/gh/joshbeard/docker-hub-tag-delete/?ref=repository-badge)
 
 Schedule and handle the deletion of image tags on the [Docker
 Hub](https://hub.docker.com).
