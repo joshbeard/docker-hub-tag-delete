@@ -145,12 +145,12 @@ def delete_expired_tags():
     """Delete tags from the Docker Hub registry using the API"""
     deleted = []
 
-    for tag in tags_to_delete():
-        headers = {
-            "Content-type": "application/json",
-            "Authorization": "Bearer %s" % docker_hub_token()
-        }
+    headers = {
+        "Content-type": "application/json",
+        "Authorization": f"Bearer {docker_hub_token()}"
+    }
 
+    for tag in tags_to_delete():
         url = '/namespaces/' + config['docker_hub']['organization'] \
                 + '/repositories/' + config['docker_hub']['repository'] \
                 + '/tags/' + tag
