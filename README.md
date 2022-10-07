@@ -102,6 +102,7 @@ The tag list and deletion dates can be set in a Markdown table using the followi
 ## Running
 
 Ensure the _required_ environment variables are set:
+
 ```shell
 DOCKERHUB_REPOSITORY=foo/bar
 DOCKERHUB_USERNAME=foo
@@ -115,6 +116,7 @@ DOCKERHUB_PASSWORD=hunter2
 ## GitHub Action
 
 Basic usage:
+
 ```yaml
     - name: Docker Hub Tag Deleter
       uses: joshbeard/hub-tag-delete@v1
@@ -129,6 +131,7 @@ __NOTE:__ You __must__ explicitly set one or both of `json_file` and `markdown_f
 anything to happen.
 
 Setting custom configuration, showing all action inputs:
+
 ```yaml
     - name: Docker Hub Tag Deleter
       uses: joshbeard/hub-tag-delete@v1
@@ -156,6 +159,7 @@ repository.
 ### Local Python Environment
 
 Create a virtual environment and activate it:
+
 ```shell
 python -m venv env
 
@@ -163,6 +167,7 @@ python -m venv env
 ```
 
 Install dependencies:
+
 ```shell
 pip install -r requirements.txt
 ```
@@ -180,6 +185,7 @@ docker build -t hubclean:local .
 
 To run the local image, pass along the required environment variables. For
 example, using the `--env-file` option with the `docker run` command:
+
 ```shell
 docker run --rm -v ${PWD}:/src -w /src --env-file env.local -it hubclean:local
 ```
@@ -188,6 +194,7 @@ Refer to the [Running](#running) section for an example of these required
 [environment variables](#environment-variables).
 
 To launch an interactive shell in the Docker container:
+
 ```shell
 docker run --rm -v ${PWD}:/src -w /src --env-file env.local -it hubclean:local sh
 
