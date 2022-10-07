@@ -157,7 +157,7 @@ def delete_expired_tags():
                 + '/tags/' + tag
 
         resp = session.delete(config['docker_hub']['api_base_url'] + url,
-                        headers=headers)
+                              headers=headers)
         resp.raise_for_status()
         deleted.append(tag)
     return deleted
@@ -171,7 +171,7 @@ def docker_hub_token():
         'password': config['docker_hub']['password']
     })
     auth = session.post(config['docker_hub']['api_base_url'] + '/users/login',
-            headers=headers, data=body)
+                        headers=headers, data=body)
     auth.raise_for_status()
     content = auth.json()
     return content['token']
