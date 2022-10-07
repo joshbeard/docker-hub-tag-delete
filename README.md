@@ -22,6 +22,10 @@ A GitHub action is also included.
 
 ## Configuration
 
+Configuration is handled using environment variables. The GitHub Action uses
+inputs that set these. Refer to [GitHub Action](#github-action) below for
+information about its configuration.
+
 ### Environment Variables
 
 #### `DOCKERHUB_USERNAME`
