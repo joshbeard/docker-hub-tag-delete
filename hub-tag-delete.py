@@ -87,9 +87,8 @@ def get_readme_table():
     for line in md_file:
         if line.startswith(config['markdown']['begin_string']):
             parsing = True
-        if parsing:
-            if not line_is_ignored(line):
-                items.append(parse_md_line(line))
+        if parsing and not line_is_ignored(line):
+            items.append(parse_md_line(line))
         if line.startswith(config['markdown']['end_string']):
             parsing = False
 
