@@ -1,6 +1,6 @@
 # Common image
 ARG src_image=python
-ARG src_image_tag=3.11-alpine
+ARG src_image_tag=3.12-alpine
 
 #########
 # Build #
